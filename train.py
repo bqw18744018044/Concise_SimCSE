@@ -26,12 +26,11 @@ def run(examples: List[str], our_training_args: OurTrainingArguments):
         num_train_epochs=our_training_args.epochs,
         per_device_train_batch_size=our_training_args.train_batch_size,
         learning_rate=our_training_args.learning_rate,
-        evaluation_strategy=our_training_args.evaluation_strategy,
-        eval_steps=our_training_args.eval_steps,
         load_best_model_at_end=our_training_args.load_best_model_at_end,
         overwrite_output_dir=our_training_args.overwrite_output_dir,
         do_train=our_training_args.do_train,
-        do_eval=our_training_args.do_eval
+        do_eval=our_training_args.do_eval,
+        logging_steps=our_training_args.logging_step
     )
     model = BertForCL.from_pretrained(data_args.model_name_or_path)
     model.resize_token_embeddings(len(tokenizer))

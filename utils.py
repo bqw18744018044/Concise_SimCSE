@@ -20,12 +20,14 @@ tokenizer = BertTokenizer.from_pretrained(data_args.model_name_or_path)
 class PairDataset(Dataset):
     def __init__(self, examples: List[str]):
         total = len(examples)
+        # 将所有样本复制一份用于对比学习
         sentences_pair = examples + examples
         sent_features = tokenizer(sentences_pair,
                                   max_length=data_args.max_seq_length,
                                   truncation=True,
                                   padding=False)
         features = {}
+        # 将相同的样本放在同一个列表中
         for key in sent_features:
             features[key] = [[sent_features[key][i], sent_features[key][i + total]] for i in range(total)]
         self.input_ids = features["input_ids"]
